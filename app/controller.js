@@ -7,6 +7,8 @@ import okDialog from './ui/okDialog';
 import copyDialog from './ui/copyDialog';
 import shareDialog from './ui/shareDialog';
 
+const short = new shortio('go.bren.app', 10097, 'EiqvfiQBfo67/ofr');
+
 export default function(state, emitter) {
   let lastRender = 0;
   let updateTitle = false;
@@ -143,6 +145,33 @@ export default function(state, emitter) {
     const start = Date.now();
     try {
       const ownedFile = await sender.upload(archive, state.user.bearerToken);
+
+      // Shorten link
+      const url = 'https://api.short.io/links/public';
+      const options = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'EiqvfiQBfo67/ofr'
+        },
+        body: JSON.stringify({
+          domain: 'go.bren.app',
+          originalURL: ownedFile.url,
+          title: `Send - ${ownedFile.name}`,
+          allowDuplicates: false
+        })
+      };
+
+      const response = await fetch(url, options);
+
+      let publicURL = ownedFile.url;
+
+      if (response.ok()) {
+        const json = await response.json();
+        publicURL = json.secureShortURL;
+      }
+
       state.storage.totalUploads += 1;
       const duration = Date.now() - start;
       metrics.completedUpload(archive, duration);
@@ -156,8 +185,8 @@ export default function(state, emitter) {
         });
       }
       state.modal = state.capabilities.share
-        ? shareDialog(ownedFile.name, ownedFile.url)
-        : copyDialog(ownedFile.name, ownedFile.url);
+        ? shareDialog(ownedFile.name, publicURL)
+        : copyDialog(ownedFile.name, publicURL);
     } catch (err) {
       if (err.message === '0') {
         //cancelled. do nothing
