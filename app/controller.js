@@ -165,7 +165,7 @@ export default function(state, emitter) {
 
       let publicURL = ownedFile.url;
 
-      if (response.ok()) {
+      if (response.ok) {
         const json = await response.json();
         publicURL = json.secureShortURL;
       }
