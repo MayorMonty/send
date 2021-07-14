@@ -204,6 +204,21 @@ const conf = convict({
     format: String,
     default: '',
     env: 'IP_DB'
+  },
+  shortio_token: {
+    format: String,
+    default: 'EiqvfiQBfo67/ofr',
+    env: 'SHORTIO_TOKEN'
+  },
+  shortio_domain_string: {
+    format: String,
+    default: 'go.bren.app',
+    env: 'SHORTIO_DOMAIN_STRING'
+  },
+  shortio_domain_ID: {
+    format: Number,
+    default: 10097,
+    env: 'SHORTIO_DOMAIN_STRING'
   }
 });
 

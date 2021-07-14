@@ -6,10 +6,18 @@ const Limiter = require('../limiter');
 const fxa = require('../fxa');
 const { statUploadEvent } = require('../amplitude');
 const { encryptedSize } = require('../../app/utils');
+const shortio = require('short.io');
 
 const { Transform } = require('stream');
 
 const log = mozlog('send.upload');
+
+// Short IO integration
+const short = new shortio(
+  config.shortio_domain_string,
+  config.shortio_domain_ID,
+  config.shortio_token
+);
 
 module.exports = function(ws, req) {
   let fileStream;
@@ -74,7 +82,13 @@ module.exports = function(ws, req) {
       };
 
       const protocol = config.env === 'production' ? 'https' : req.protocol;
-      const url = `${protocol}://${req.get('host')}/download/${newId}/`;
+      const originalURL = `${protocol}://${req.get('host')}/download/${newId}/`;
+
+      // Shorten this URL with short.io
+      const url = await short.createLink({
+        originalURL,
+        tags: 'send'
+      });
 
       ws.send(
         JSON.stringify({
