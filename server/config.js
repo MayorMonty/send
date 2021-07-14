@@ -91,7 +91,7 @@ const conf = convict({
   },
   listen_address: {
     format: 'ipaddress',
-    default: '0.0.0.0',
+    default: '127.0.0.1',
     env: 'IP_ADDRESS'
   },
   listen_port: {
@@ -147,7 +147,7 @@ const conf = convict({
   },
   base_url: {
     format: 'url',
-    default: 'https://send.firefox.com',
+    default: 'https://send.bren.app',
     env: 'BASE_URL'
   },
   file_dir: {
