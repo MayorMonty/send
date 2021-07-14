@@ -7,8 +7,6 @@ import okDialog from './ui/okDialog';
 import copyDialog from './ui/copyDialog';
 import shareDialog from './ui/shareDialog';
 
-const short = new shortio('go.bren.app', 10097, 'EiqvfiQBfo67/ofr');
-
 export default function(state, emitter) {
   let lastRender = 0;
   let updateTitle = false;
