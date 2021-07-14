@@ -34,7 +34,7 @@ footerLinkPrivacy = Tabaḍnit
 footerLinkCookies = Inagan n tuqqna
 passwordTryAgain = Yir awal uffir. Ɛreḍ tikelt nniḍen.
 javascriptRequired = Send yesra JavaScript
-whyJavascript = Ayɣer firefox Send yesra JavaScript?
+whyJavascript = Ayɣer Send yesra JavaScript?
 enableJavascript = Ma ulac aɣilif rmed JavaScript sakin ɛreḍ tikkelt nniḍen.
 # A short representation of a countdown timer containing the number of hours and minutes remaining as digits, example "13h 47m"
 expiresHoursMinutes = { $hours }Isragen { $minutes }Tisdatin
